@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model APUC_studentprofile {
+  ID  Int @id @default(autoincrement())
+  INSTITUTIONCODE     String? @db.VarChar(10)
+  APPLNO              String? @db.VarChar(15)
+  APPLDATE            String? @db.VarChar(12)
+  AcademicYear        String? @db.VarChar(7)
+  StudentType         String? @db.VarChar(6)
+  StudentName         String? @db.VarChar(255)
+  AdmissionNo         String? @db.VarChar(25)
+  Class               String? @db.VarChar(100)
+  SECTION             String? @db.VarChar(35)
+  DOB                 String? @db.VarChar(12)
+  Gender              String? @db.VarChar(6)
+  CONTACT             String? @db.VarChar(10)
+  EmailID             String? @db.VarChar(255)
+  FirstName           String? @db.VarChar(255)
+  LastName            String? @db.VarChar(255)
+  FatherName          String? @db.VarChar(255)
+  MotherName          String? @db.VarChar(255)
+  POB                 String? @db.VarChar(255)
+  MotherTounge        String? @db.VarChar(255)
+  Nationality         String? @db.VarChar(6)
+  Religion            String? @db.VarChar(25)
+  Caste               String? @db.VarChar(25)
+  SubCaste            String? @db.VarChar(25)
+  AadharNo            String? @db.VarChar(16)
+  StsNo               String? @db.VarChar(25)
+  AcademicFeeStructure String? @db.VarChar(255)
+  FEEAMOUNT           String? @db.VarChar(25)
+  PrevCollegeName     String? @db.VarChar(255)
+  Remarks             String? @db.VarChar(255)
+  StudentStatus       String? @db.VarChar(255)
+  FlatNo              String? @db.VarChar(255)
+  Street              String? @db.VarChar(255)
+  Town                String? @db.VarChar(255)
+  District            String? @db.VarChar(255)
+  Pincode             String? @db.VarChar(6)
+  LedgerName          String? @db.VarChar(255)
+  DueStatus           String? @db.VarChar(3)
+  ProfileCreateBy     String? @db.VarChar(255)
+  PROFILECREATEDON    String? @db.VarChar(12)
+  PROFILECREATETIME   String? @db.VarChar(30)
+  StudentOldorNew     String? @db.VarChar(10)
+  LedFlag             String? @db.VarChar(3)
+  state               String? @db.VarChar(50)
+  studentid           String? @db.VarChar(30)
+  SMSContact          String? @db.VarChar(10)
+  HostelName          String? @db.VarChar(255)
+  WardenName          String? @db.VarChar(255)
+  ReportingDate       DateTime? @db.Date
+  hostelId            Int?
+  Hostel              Hostel? @relation(fields: [hostelId], references: [id])
+}
+
+model Hostel{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(10)
+  students APUC_studentprofile[]
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(10)
+  email String  @db.VarChar(10)
+  password String @db.VarChar(20)
+}
