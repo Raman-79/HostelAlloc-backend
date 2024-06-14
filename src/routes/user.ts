@@ -1,10 +1,10 @@
 import express from 'express';
-import {findUser} from '../controllers/user';
+import {findUser,createUser} from '../controllers/user';
 
 const router = express.Router();
 
-router.get('/:name', findUser);
+router.get('/find', findUser);
 
-router.post('/createUser');
+router.post('/createUser',createUser);
 
 export default router;
