@@ -13,6 +13,8 @@ exports.createUser = exports.findUser = void 0;
 const db_1 = require("../db");
 const findUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.query;
+    const NAME = name;
+    const [firstName, lastName] = NAME === null || NAME === void 0 ? void 0 : NAME.split(' ');
     if (!name) {
         return res.status(400).json({ message: 'First name or Last name is required' });
     }
@@ -27,14 +29,14 @@ const findUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 OR: [
                     {
                         OR: [
-                            { FirstName: { startsWith: name } },
-                            { LastName: { endsWith: name } }
+                            { FirstName: { contains: NAME } },
+                            { LastName: { contains: NAME } }
                         ]
                     },
                     {
                         AND: [
-                            { FirstName: { startsWith: name } },
-                            { LastName: { endsWith: name } }
+                            { FirstName: { startsWith: firstName } },
+                            { LastName: { contains: lastName } }
                         ]
                     }
                 ],
