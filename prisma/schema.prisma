@@ -73,6 +73,7 @@ model Hostel{
   students APUC_studentprofile[]
 }
 
+
 model User{
   id Int @id @default(autoincrement())
   name String @db.VarChar(10)

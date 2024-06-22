@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.findUser = void 0;
+exports.getUser = exports.createUser = exports.findUser = void 0;
 const db_1 = require("../db");
+const types_1 = require("../types");
 const findUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.query;
     const NAME = name;
@@ -48,7 +49,10 @@ const findUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(200).json({ students });
     }
     catch (error) {
-        //res.status(500).json({ message: 'An error occurred while fetching the user', error: error.message });
+        if ((0, types_1.isServerError)(error))
+            res.status(500).json({ message: 'An error occurred while fetching the user', error: error.message });
+        else
+            res.status(500).json({ message: 'An error occurred while fetching the user' });
     }
 });
 exports.findUser = findUser;
@@ -71,5 +75,25 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createUser = createUser;
-// TODO: Learn about Pagination and apply 
-// TODO : Create hostel/admin signup and login api's
+const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.query;
+    const ID = Number(id);
+    if (isNaN(ID)) {
+        return res.status(400).json({ message: 'ID is required' });
+    }
+    try {
+        const user = yield db_1.db.aPUC_studentprofile.findUnique({
+            where: {
+                ID: ID,
+            }
+        });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ user });
+    }
+    catch (error) {
+        //res.status(500).json({ message: 'An error occurred while fetching the user', error: error.message });
+    }
+});
+exports.getUser = getUser;

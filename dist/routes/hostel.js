@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_1 = require("../controllers/user");
+const hostel_1 = require("../controllers/hostel");
 const router = express_1.default.Router();
-router.get('/find', user_1.findUser);
-router.get('/user', user_1.getUser);
-router.post('/createUser', user_1.createUser);
+router.put('/allocate', hostel_1.allocateHostel);
+router.post('/create', hostel_1.createHostel);
+router.get('/all', hostel_1.getAllHostels);
 exports.default = router;
