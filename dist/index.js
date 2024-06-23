@@ -8,8 +8,10 @@ const body_parser_1 = __importDefault(require("body-parser"));
 // Import routes
 const user_1 = __importDefault(require("./routes/user"));
 const hostel_1 = __importDefault(require("./routes/hostel"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 // Middleware
+app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 // Routes
