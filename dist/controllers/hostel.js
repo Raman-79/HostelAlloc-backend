@@ -13,9 +13,11 @@ exports.createHostel = exports.allocateHostel = exports.getAllHostels = void 0;
 const db_1 = require("../db");
 const types_1 = require("../types");
 const allocateHostel = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { studentId, hostelId } = req.body;
+    const { studentId, hostelId, wardenName } = req.body;
     const HOSTELID = parseInt(hostelId);
     const StudentID = parseInt(studentId);
+    const Warden = wardenName;
+    const ReportingTime = new Date();
     if (!studentId || !hostelId) {
         return res.status(400).json({ message: 'Student ID and Hostel ID are required' });
     }
@@ -41,10 +43,12 @@ const allocateHostel = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 ID: StudentID
             },
             data: {
-                hostelId: HOSTELID
+                hostelId: HOSTELID,
+                WardenName: Warden,
+                ReportingDate: ReportingTime
             }
         });
-        res.status(201).json({ message: 'Hostel allocated successfully', allocation });
+        res.status(201).json({ message: 'Hostel allocated successfully', allocation, ReportingDate: ReportingTime });
     }
     catch (error) {
         if ((0, types_1.isServerError)(error))

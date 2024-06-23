@@ -4,9 +4,11 @@ import { db } from '../db';
 import { isServerError } from '../types';
 const allocateHostel = async (req: Request, res: Response) => {
 
-    const { studentId, hostelId } = req.body;
+    const { studentId, hostelId, wardenName } = req.body;
     const HOSTELID : number = parseInt(hostelId);
     const StudentID : number = parseInt(studentId);
+    const Warden: string = wardenName;
+    const ReportingTime: Date | null = new Date();
 
     if (!studentId || !hostelId) {
         return res.status(400).json({ message: 'Student ID and Hostel ID are required' });
@@ -38,11 +40,13 @@ const allocateHostel = async (req: Request, res: Response) => {
                 ID: StudentID
             },
             data: {
-                hostelId: HOSTELID
+                hostelId: HOSTELID,
+                WardenName: Warden,
+                ReportingDate: ReportingTime
             }
         });
         
-        res.status(201).json({ message: 'Hostel allocated successfully', allocation });
+        res.status(201).json({ message: 'Hostel allocated successfully', allocation, ReportingDate: ReportingTime });
     } catch (error) {
         if(isServerError(error))
             res.status(500).json({ message: 'An error occurred while allocating the hostel', error: error.message });
