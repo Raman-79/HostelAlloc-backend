@@ -76,7 +76,8 @@ model Hostel{
 
 model User{
   id Int @id @default(autoincrement())
+  phone String @db.VarChar(10) @unique
   name String @db.VarChar(10)
   email String  @db.VarChar(10)
-  password String @db.VarChar(20)
+  password String? @db.VarChar(20)
 }

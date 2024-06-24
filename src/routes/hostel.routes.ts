@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllHostels,allocateHostel,createHostel } from '../controllers/hostel';
+import { getAllHostels,allocateHostel,createHostel } from '../controllers/hostel.controllers';
 const router = express.Router();
 
 router.put('/allocate',allocateHostel);
