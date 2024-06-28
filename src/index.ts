@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 // Import routes
 
 import studentRoutes from './routes/student.routes';
-import hostelroutes from './routes/hostel.routes';
+import hostelRoutes from './routes/hostel.routes';
+import userRoutes from './routes/user.routes'
 import cors from 'cors';
 const app: Application = express();
  
@@ -15,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/student', studentRoutes);
-app.use('/api/v1/hostel',hostelroutes)
-app.use('/api/v1/user',studentRoutes);
+app.use('/api/v1/hostel',hostelRoutes)
+app.use('/api/v1/user',userRoutes);
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
